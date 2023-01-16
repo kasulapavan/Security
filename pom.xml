@@ -14,7 +14,7 @@
 	<name>project.k</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>17</java.version>employeeService
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -28,6 +28,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.28</version>
 		</dependency>
 
 		<dependency>

@@ -20,7 +20,7 @@ public class EmployeeDto {
 
 
     private String password;
-
+    private String token;
 
 
 }
