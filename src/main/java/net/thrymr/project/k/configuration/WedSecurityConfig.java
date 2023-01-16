@@ -24,6 +24,7 @@ public class WedSecurityConfig {
 
     private String[] PUBLIC_RESOURCE_AND_URL = {"/",
             "/api/save-signup",
+            "/api/sign-in",
     };
 
     @Bean

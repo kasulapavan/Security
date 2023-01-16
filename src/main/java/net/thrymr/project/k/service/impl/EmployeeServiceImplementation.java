@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,8 +23,23 @@ public class EmployeeServiceImplementation implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
+@Autowired
     private PasswordConversion passwordConversion;
+
+public ApiResponse signIn(EmployeeDto employeeDto) {
+    Employee employee = employeeRepository.findByEmail(employeeDto.getEmail());
+
+    if (employee == null) {
+        return new ApiResponse(HttpStatus.UNAUTHORIZED.value(),"Email id is wrong");
+    }
+    if (passwordConversion.matches(passwordConversion.encoder(employeeDto.getPassword()), employee.getPassword())) {
+        return new ApiResponse(HttpStatus.OK.value(), entityToDto(employee));
+    } else {
+        return new ApiResponse(HttpStatus.UNAUTHORIZED.value(), "Password is wrong");
+    }
+
+}
+
 
     public ApiResponse  singUp(EmployeeDto employeeDto){
         Employee employee = new Employee();
@@ -31,19 +47,16 @@ public class EmployeeServiceImplementation implements EmployeeService {
         employee.setEmployeeName(employeeDto.getEmployeeName());
         employee.setEmail(employeeDto.getEmail());
         employee.setRoleType(employeeDto.getRoleType());
-        employee.setPassword(employeeDto.getPassword());
+        employee.setPassword(passwordConversion.encoder(employeeDto.getPassword()));
         employeeRepository.save(employee);
-        return new ApiResponse( HttpStatus.OK.value(), "Registration is done", employee);
+        return new ApiResponse( HttpStatus.OK.value(), "Registration is done");
 
     }
 
     @Override
     public Employee verifyUser(EmployeeDto employeeDto) {
         Employee user = employeeRepository.findByEmail(employeeDto.getEmail());
-//        if (user == null) {
-//            return null;
-//        }
-        if (employeeDto.getPassword().equals(user.getPassword())) {
+        if(passwordConversion.matches(employeeDto.getPassword(), user.getPassword())){
             return user;
         } else {
             return null;
@@ -55,5 +68,15 @@ public class EmployeeServiceImplementation implements EmployeeService {
       return new ApiResponse(HttpStatus.OK.value(), employeeRepository.findAll().stream().toList());
     }
 
+public EmployeeDto entityToDto(Employee employee){
+        EmployeeDto employeeDto = new EmployeeDto();
+        employeeDto.setId(employee.getId());
+        employeeDto.setEmployeeName(employee.getEmployeeName());
+        employeeDto.setRoleType(employee.getRoleType());
+        employeeDto.setEmail(employee.getEmail());
+        employeeDto.setPassword(employee.getPassword());
+        return employeeDto;
+
+}
 }
 

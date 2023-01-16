@@ -12,4 +12,6 @@ public interface EmployeeService {
     Employee verifyUser(EmployeeDto employeeDto);
 
     ApiResponse getAll();
+
+    public ApiResponse signIn(EmployeeDto employeeDto);
 }

@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -63,10 +64,9 @@ public class CustomAuthFilter extends OncePerRequestFilter {
             }
 
 
-    public ApiResponse generateUnauthorisedAccess() throws JsonProcessingException, IOException {
 
-        ApiResponse resp = new ApiResponse(HttpStatus.UNAUTHORIZED.value(), "UNAUTORISED");
-        return  resp;
+            public ApiResponse generateUnauthorisedAccess() {
+        return new ApiResponse(HttpStatus.UNAUTHORIZED.value(), "UNAUTORISED");
 
     }
 }

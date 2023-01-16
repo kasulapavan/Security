@@ -19,7 +19,10 @@ public class EmployeeController {
     public ApiResponse signUp(@RequestBody EmployeeDto employeeDto){
         return userService.singUp(employeeDto);
     }
-
+@PostMapping("/sign-in")
+public ApiResponse signIn(@RequestBody EmployeeDto employeeDto){
+        return userService.signIn(employeeDto);
+}
 
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     @GetMapping("/get-all")

@@ -22,8 +22,10 @@ public class Employee {
 
 
     private String employeeName;
+    @Column(name = "email", unique = true)
 
     private String email;
+    @Enumerated(EnumType.STRING)
 
     private RoleType roleType;
 
