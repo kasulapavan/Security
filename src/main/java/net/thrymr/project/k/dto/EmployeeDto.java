@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import net.thrymr.project.k.entity.Employee;
 import net.thrymr.project.k.enums.RoleType;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +25,10 @@ public class EmployeeDto {
     private String token;
 
 
+    public EmployeeDto(Employee employee) {
+        this.id=employee.getId();
+        this.employeeName=employee.getEmployeeName();
+        this.email=employee.getEmail();
+        this.roleType=employee.getRoleType();
+    }
 }

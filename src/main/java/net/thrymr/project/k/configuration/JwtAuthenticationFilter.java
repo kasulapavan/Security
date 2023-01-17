@@ -22,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Map;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -41,10 +42,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String authToken = req.getHeader("Authorization");
-
-            String username = jwtTokenUtil.parseToken(authToken);
-
-            Employee user = appUserRepo.findByEmail(username);
+            Map<String, String> username = jwtTokenUtil.parseToken(authToken);
+            Employee user = appUserRepo.findByEmail(username.get("email"));
             if (user != null) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(
                         new SimpleGrantedAuthority(user.getRoleType().name())));
@@ -54,9 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filter.doFilter(req, res);
             }
         } catch (Exception e) {
-
             e.printStackTrace();
-
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             ApiResponse resp = new ApiResponse(HttpStatus.UNAUTHORIZED.value(), "SUCCESS");
             String jsonRespString = ow.writeValueAsString(resp);

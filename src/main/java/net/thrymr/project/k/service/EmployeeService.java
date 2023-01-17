@@ -1,6 +1,7 @@
 package net.thrymr.project.k.service;
 
 
+import com.nimbusds.jose.JOSEException;
 import net.thrymr.project.k.CustomException.ApiResponse;
 import net.thrymr.project.k.dto.EmployeeDto;
 import net.thrymr.project.k.entity.Employee;
@@ -13,5 +14,5 @@ public interface EmployeeService {
 
     ApiResponse getAll();
 
-    public ApiResponse signIn(EmployeeDto employeeDto);
+    public ApiResponse signIn(EmployeeDto employeeDto) throws JOSEException;
 }

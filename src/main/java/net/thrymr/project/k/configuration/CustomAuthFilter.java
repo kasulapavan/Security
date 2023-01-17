@@ -9,6 +9,7 @@ import net.thrymr.project.k.CustomException.ApiResponse;
 import net.thrymr.project.k.dto.EmployeeDto;
 import net.thrymr.project.k.entity.Employee;
 import net.thrymr.project.k.service.EmployeeService;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class CustomAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String authToken = request.getHeader("Authorization");
+            System.out.println(authToken);
             if (authToken != null) {
                 Employee user = employeeService.verifyUser(generateLoginDto(authToken.split(":")[0], authToken.split(":")[1]));
                 if(user != null){

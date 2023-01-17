@@ -1,5 +1,6 @@
 package net.thrymr.project.k.controller;
 
+import com.nimbusds.jose.JOSEException;
 import net.thrymr.project.k.CustomException.ApiResponse;
 import net.thrymr.project.k.dto.EmployeeDto;
 import net.thrymr.project.k.service.EmployeeService;
@@ -20,11 +21,11 @@ public class EmployeeController {
         return userService.singUp(employeeDto);
     }
 @PostMapping("/sign-in")
-public ApiResponse signIn(@RequestBody EmployeeDto employeeDto){
+public ApiResponse signIn(@RequestBody EmployeeDto employeeDto) throws JOSEException {
         return userService.signIn(employeeDto);
 }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
+@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     @GetMapping("/get-all")
     public ApiResponse getAll(){
         return userService.getAll();
