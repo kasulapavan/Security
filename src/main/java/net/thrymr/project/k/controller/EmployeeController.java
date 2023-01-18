@@ -16,7 +16,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService userService;
 
-    @PostMapping("/save-signup")
+    @PostMapping("/signup")
     public ApiResponse signUp(@RequestBody EmployeeDto employeeDto){
         return userService.singUp(employeeDto);
     }
